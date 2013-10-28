@@ -1,0 +1,38 @@
+#! /usr/bin/env python
+
+import sys, string, os, random
+
+try:
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Generate random RP placements.')
+    parser.add_argument('number', type=int, nargs=2,
+                       help='number-of-judges number-of-candidates')
+
+    args = parser.parse_args()
+
+    judges = args.number[0]
+    candidates = args.number[1]
+except:
+  if len(sys.argv) != 3:
+    sys.stderr.write("usage: rpgen number-of-judges number-of-candidates\n")
+    sys.exit(2)
+  else:
+    judges = int(sys.argv[1])
+    candidates = int(sys.argv[2])
+
+if (judges < 1) or (candidates < 1):
+  raise TypeError("arguments must be integers >= 1")
+
+master = list(range(1,candidates + 1))
+judge_placements = []
+
+for i in list(range(judges)):
+  random.shuffle(master)
+  tmp = master[:]
+  judge_placements.append(tmp)
+
+for i in list(range(candidates)):
+  for jp in judge_placements:
+    print jp[i],
+  print
