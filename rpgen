@@ -15,14 +15,15 @@ try:
     candidates = args.number[1]
 except:
   if len(sys.argv) != 3:
-    sys.stderr.write("usage: rpgen number-of-judges number-of-candidates\n")
+    print("usage: rpgen number-of-judges number-of-candidates", file=sys.stderr)
     sys.exit(2)
   else:
     judges = int(sys.argv[1])
     candidates = int(sys.argv[2])
 
 if (judges < 1) or (candidates < 1):
-  raise TypeError("arguments must be integers >= 1")
+  print("arguments must be integers >= 1", file=sys.stderr)
+  sys.exit(2)
 
 master = list(range(1,candidates + 1))
 judge_placements = []
@@ -34,5 +35,5 @@ for i in list(range(judges)):
 
 for i in list(range(candidates)):
   for jp in judge_placements:
-    print jp[i],
-  print
+    print(jp[i], end=' ')
+  print()
